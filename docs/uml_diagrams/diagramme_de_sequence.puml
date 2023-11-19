@@ -1,0 +1,14 @@
+@startuml diagramme de séquence affichage liste de films
+User -> MoviesView: Display UI (Initial State)
+MoviesView -> MoviesCubit: LoadMoviesEvent (State MoviesLoadingState)
+MoviesCubit -> MovieService: loadMovies()
+MovieService -> DataSource: API Call fetchMovies()
+DataSource --> MovieService: API Response
+MovieService -> MoviesCubit: use Model to build Movies List
+MoviesCubit --> MoviesView: Movies List is build (State MoviesStateSuccess)
+MoviesView -> MoviesList: Display MoviesList
+MoviesList -> MovieCard: Use MovieCard for each Movie
+MovieCard --> MoviesList: Return to MoviesList
+MoviesList --> MoviesView: Return to MoviesView
+MoviesView --> User: Display updated UI (Final State)
+@enduml
