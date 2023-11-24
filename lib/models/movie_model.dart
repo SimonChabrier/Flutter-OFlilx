@@ -42,13 +42,16 @@ class MovieModel {
       originalLanguage: json['original_language'] ?? '',
       originalTitle: json['original_title'] ?? '',
       overview: json['overview'] ?? '',
-      popularity: json['popularity'] ?? 0.0,
+      //popularity: json['popularity'] ?? 0.0,
       posterPath: json['poster_path'] ?? '',
       releaseDate: json['release_date'] ?? '',
       title: json['title'] ?? '',
       video: json['video'] ?? false,
-      voteAverage: json['vote_average'] ?? 0.0,
+      //voteAverage: json['vote_average'] ?? 0.0,
       voteCount: json['vote_count'] ?? 0,
+
+      popularity: (json['popularity'] ?? 0.0).toDouble(),
+      voteAverage: (json['vote_average'] ?? 0.0).toDouble(),
     );
   }
 

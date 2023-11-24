@@ -6,7 +6,7 @@ import 'package:oflix/models/movie_model.dart';
 const _baseUrl =
     'https://api.themoviedb.org/3/discover/movie?api_key=${ApiConfig.apiKey}';
 
-class MoviesDataSource {
+class  MoviesDataSource {
   // méthode statique pour récupérer les films
   // je vais l'apeller dans le service MovieService
   // c'est le Cubit qui va appeler le service en fonction de l'état de l'application
