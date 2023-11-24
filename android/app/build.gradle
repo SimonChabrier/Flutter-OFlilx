@@ -53,13 +53,13 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
-    
+
     signingConfigs {
         release {
             storeFile file('my-release-key.jks')
-            storePassword project.storePassword
-            keyAlias project.keyAlias
-            keyPassword project.keyPassword
+            storePassword project.findProperty("storePassword") ?: ""
+            keyAlias project.findProperty("keyAlias") ?: ""
+            keyPassword project.findProperty("keyPassword") ?: ""
         }
     }
 
