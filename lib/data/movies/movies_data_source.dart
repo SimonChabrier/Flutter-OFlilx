@@ -6,7 +6,7 @@ import 'package:oflix/models/movie_model.dart';
 const _baseUrl =
     'https://api.themoviedb.org/3/discover/movie?api_key=${ApiConfig.apiKey}';
 
-class  MoviesDataSource {
+class MoviesDataSource {
   // méthode statique pour récupérer les films
   // je vais l'apeller dans le service MovieService
   // c'est le Cubit qui va appeler le service en fonction de l'état de l'application
@@ -30,6 +30,28 @@ class  MoviesDataSource {
             results.map((json) => MovieModel.fromJson(json)).toList();
         // On retourne la liste movies
         return movies;
+      } else {
+        throw Exception(
+            'Failed to load movies. Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to load movies. Error: $e');
+    }
+  }
+
+  // méthode statique pour récupérer un film par son id
+  // je vais l'apeller dans le service MovieService
+  static Future<MovieModel> fetchMovieById(int id) async {
+    // bloc try/catch pour gérer les erreurs de manière appropriée
+    try {
+      final response = await http.get(Uri.parse('$_baseUrl&id=$id'));
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        final List<dynamic> results = data['results'];
+        final movies =
+            results.map((json) => MovieModel.fromJson(json)).toList();
+        return movies[0];
       } else {
         throw Exception(
             'Failed to load movies. Status Code: ${response.statusCode}');
