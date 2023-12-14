@@ -38,4 +38,17 @@ class MoviesCubit extends Cubit<MoviesState> {
       isLoading = false;
     }
   }
+
+  // méthode pour récupérer un film par son id
+  void loadMovieById(int id) async {
+    try {
+      debugPrint('loadMovieById');
+      final MovieModel movie = await movieService.fetchMovieById(id);
+      emit(MoviesStateSuccess([movie]));
+    } catch (error) {
+      emit(MoviesStateError(error.toString()));
+    } finally {
+      isLoading = false;
+    }
+  }
 }

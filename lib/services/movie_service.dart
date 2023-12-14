@@ -17,4 +17,13 @@ class MovieService {
       return Future.error(e);
     }
   }
+
+  // get movie by id
+  Future<MovieModel> fetchMovieById(int id) async {
+    try {
+      return await MoviesDataSource.fetchMovieById(id);
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
 }

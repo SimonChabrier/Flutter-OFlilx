@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oflix/models/movie_model.dart';
 import 'package:oflix/widgets/star_rating.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oflix/bloc/movies/movies_cubit.dart';
+import 'package:oflix/bloc/movies/movies_state.dart';
 
 class MovieCard extends StatelessWidget {
   final MovieModel movie;
@@ -9,6 +13,7 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final moviesCubit = context.read<MoviesCubit>();
     return SizedBox(
       width: 300,
       child: Column(
@@ -39,6 +44,14 @@ class MovieCard extends StatelessWidget {
             'Synopsis ${movie.overview.length > 150 ? '${movie.overview.substring(0, 120)}...' : movie.overview}',
             style: const TextStyle(fontSize: 12.0),
           ),
+          const SizedBox(height: 8.0),
+          ElevatedButton(
+            onPressed: () {
+              GoRouter.of(context).go('/movie/${movie.id}',
+                  parameters: {'id': movie.id.toString()});
+            },
+            child: const Text('Voir plus'),
+          )
         ],
       ),
     );

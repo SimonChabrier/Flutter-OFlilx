@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:oflix/views/profil_view.dart';
 import 'package:oflix/views/movies_view.dart';
+import 'package:oflix/views/movie_view.dart';
 import 'package:oflix/views/notifications_view.dart';
 import 'package:oflix/views/search_view.dart';
 
@@ -29,6 +30,12 @@ abstract class AppRouter {
           path: '/search',
           name: SearchView.pageName,
           builder: (context, state) => const SearchView(),
+        ),
+        GoRoute(
+          path: '/movie/:id',
+          name: MovieView.pageName,
+          builder: (context, state) =>
+              MovieView(title: 'Détail', id: state.pathParameters['id']!),
         ),
       ]);
 }
