@@ -40,3 +40,11 @@ r (dans le terminal où on a lancé l'App)
 # Pour pas bloquer les images chargées depuis le net si on est en local:
 flutter run -d chrome --web-browser-flag "--disable-web-security"
 
+
+## LANCEMENT DE L'APP SUR UN SIMULATEUR iOS
+
+# lancer Xcode:
+open -a Simulator
+# lancer le projet sur un device iOS:
+flutter run
+
