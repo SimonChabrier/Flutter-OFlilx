@@ -32,10 +32,11 @@ abstract class AppRouter {
           builder: (context, state) => const SearchView(),
         ),
         GoRoute(
-          path: '/movie/:id',
-          name: MovieView.pageName,
-          builder: (context, state) =>
-              MovieView(title: 'Détail', id: state.pathParameters['id']!),
-        ),
+            path: '/movie/:id',
+            name: MovieView.pageName,
+            builder: (context, state) {
+              final movieId = state.pathParameters['id'] ?? '';
+              return MovieView(title: 'Détail', id: movieId);
+            }),
       ]);
 }

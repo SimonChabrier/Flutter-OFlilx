@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oflix/bloc/movies/movies_cubit.dart';
 import 'package:oflix/bloc/movies/movies_state.dart';
-import 'package:oflix/widgets/movie_card.dart';
+import 'package:oflix/widgets/movie_detail.dart';
 import 'package:oflix/widgets/top_app_bar.dart';
 import 'package:oflix/widgets/section_title.dart';
 import 'package:oflix/widgets/spinner.dart';
@@ -21,7 +21,7 @@ class MovieView extends StatelessWidget {
     // on le stocke dans une variable pour pouvoir l'utiliser plus tard
     final moviesCubit = context.read<MoviesCubit>();
     // on appelle la méthode loadMovies() du MoviesCubit sur la variable créée précédemment
-    moviesCubit.loadMovies();
+    moviesCubit.loadMovieById(int.parse(id));
     // on retourne un Scaffold avec un TopAppBar et un MoviesList
     return Scaffold(
       appBar: TopAppBar(title: title),
@@ -31,15 +31,19 @@ class MovieView extends StatelessWidget {
             const SectionTitle(title: "Détails du film"),
             BlocBuilder<MoviesCubit, MoviesState>(
               builder: (context, state) {
-                if (state is MoviesLoadingState) {
+                if (state is MovieLoadingState) {
+                  debugPrint('MovieLoadingState');
                   return const LoadingIndicator();
-                } else if (state is MoviesStateError) {
+                } else if (state is MovieStateError) {
+                  debugPrint('MovieStateError');
                   return Center(
                     child: Text('Erreur ${state.error}'),
                   );
-                } else if (state is MoviesStateSuccess) {
-                  return MovieCard(movie: state.movies[0]);
+                } else if (state is MovieStateSuccess) {
+                  debugPrint('MovieStateSuccess');
+                  return MovieDetail(movie: state.movie);
                 } else {
+                  debugPrint('Container');
                   return Container();
                 }
               },
@@ -50,5 +54,3 @@ class MovieView extends StatelessWidget {
     );
   }
 }
-
-class require {}

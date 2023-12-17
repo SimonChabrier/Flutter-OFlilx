@@ -1,20 +1,19 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:oflix/data/config/api_config.dart';
 import 'package:oflix/models/movie_model.dart';
 
-const _baseUrl =
-    'https://api.themoviedb.org/3/discover/movie?api_key=${ApiConfig.apiKey}';
-
 class MoviesDataSource {
-  // méthode statique pour récupérer les films
+  // méthode statique pour récupérer les filmsWXXW
   // je vais l'apeller dans le service MovieService
   // c'est le Cubit qui va appeler le service en fonction de l'état de l'application
   // On attend ici un type List de MovieModel
   static Future<List<MovieModel>> fetchMovies() async {
-    // bloc try/catch pour gérer les erreurs de manière appropriée
+    const baseUrl =
+        'https://api.themoviedb.org/3/discover/movie?api_key=${ApiConfig.apiKey}';
     try {
-      final response = await http.get(Uri.parse(_baseUrl));
+      final response = await http.get(Uri.parse(baseUrl));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
@@ -44,20 +43,24 @@ class MoviesDataSource {
   static Future<MovieModel> fetchMovieById(int id) async {
     // bloc try/catch pour gérer les erreurs de manière appropriée
     try {
-      final response = await http.get(Uri.parse('$_baseUrl&id=$id'));
+      final String movieUrl =
+          'https://api.themoviedb.org/3/movie/$id?api_key=${ApiConfig.apiKey}';
+
+      final response = await http.get(Uri.parse(movieUrl));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
-        final List<dynamic> results = data['results'];
-        final movies =
-            results.map((json) => MovieModel.fromJson(json)).toList();
-        return movies[0];
+        final MovieModel movie = MovieModel.fromJson(
+            data); // Utiliser directement MovieModel.fromJson
+        debugPrint('movie: $movie');
+        debugPrint('movie.title: ${movie.title}');
+        return movie;
       } else {
         throw Exception(
-            'Failed to load movies. Status Code: ${response.statusCode}');
+            'Failed to load movie. Status Code: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Failed to load movies. Error: $e');
+      throw Exception('Failed to load movie. Error: $e');
     }
   }
 }

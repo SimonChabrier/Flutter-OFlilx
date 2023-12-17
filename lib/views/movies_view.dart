@@ -15,21 +15,19 @@ class MoviesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // on récupère le MoviesCubit depuis le contexte en utilisant context.read<MoviesCubit>()
-    // on le stocke dans une variable pour pouvoir l'utiliser plus tard
     final moviesCubit = context.read<MoviesCubit>();
-    // on appelle la méthode loadMovies() du MoviesCubit sur la variable créée précédemment
     moviesCubit.loadMovies();
-    // on retourne un Scaffold avec un TopAppBar et un MoviesList
+
     return Scaffold(
       appBar: TopAppBar(title: title),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SectionTitle(title: "Continuer de regarder"),
+            const SectionTitle(title: "LIste des films"),
             BlocBuilder<MoviesCubit, MoviesState>(
               builder: (context, state) {
                 if (state is MoviesLoadingState) {
+                  debugPrint('MoviesLoadingState');
                   return const LoadingIndicator();
                 } else if (state is MoviesStateError) {
                   return Center(

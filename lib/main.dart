@@ -15,11 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MoviesCubit(
-        movieService: MovieService(
-          MoviesDataSource(),
-        ),
-      ),
+      create: (context) => MoviesCubit(),
       child: MaterialApp.router(
         title: 'Oflix',
         theme: ThemeData.dark(),

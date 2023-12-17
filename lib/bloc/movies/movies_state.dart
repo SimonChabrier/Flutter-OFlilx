@@ -8,6 +8,7 @@ class MoviesInitialState extends MoviesState {
 
 class MoviesLoadingState extends MoviesState {
   // gérer ici la logique d'un état de chargement si besoin
+  // retourner un spinner par exemple
 }
 
 class MoviesStateError extends MoviesState {
@@ -25,4 +26,31 @@ class MoviesStateSuccess extends MoviesState {
   // c'est le cubut qui va emit cet état avec la liste de films
   // il es ensuite récupéré par le MoviesView qui va afficher les films
   MoviesStateSuccess(this.movies);
+}
+
+// le cas où on veut afficher un film par son id
+// on va créer un état spécifique pour afficher un film
+
+class MovieStateSuccess extends MoviesState {
+  // on ajoute une liste de films pour stocker les films récupérés depuis le service
+  // ils sont retournés par le cubit qui apelle le service
+  final MovieModel movie;
+
+  MovieStateSuccess(this.movie);
+}
+
+class MovieStateError extends MoviesState {
+  // on initialise une String pour stocker le message d'erreur
+  final String error;
+  // on ajoute un constructeur pour pouvoir passer le message d'erreur
+  MovieStateError(this.error);
+}
+
+class MovieLoadingState extends MoviesState {
+  // gérer ici la logique d'un état de chargement si besoin
+  // retourner un spinner par exemple
+}
+
+class MovieInitialState extends MoviesState {
+  // gérer ici la logique d'un état initial si besoin
 }

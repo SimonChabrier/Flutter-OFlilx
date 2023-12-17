@@ -1,7 +1,9 @@
 // retourne le widget de la AppBar avec les boutons de navigation
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:oflix/bloc/movies/movies_cubit.dart';
 
 // on utilise le mixin PreferredSizeWidget pour définir la taille de la AppBar (kToolbarHeight)
 class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -17,9 +19,10 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leading: IconButton(
         icon: const Icon(Icons.home),
-        onPressed: () {
-          //  affiche la page d'accueil
-          context.goNamed('home');
+        onPressed: () async {
+          GoRouter.of(context).goNamed('home');
+          final moviesCubit = context.read<MoviesCubit>();
+          moviesCubit.loadMovies();
           debugPrint('Home');
         },
       ),

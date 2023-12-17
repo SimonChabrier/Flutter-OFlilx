@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:oflix/data/movies/movies_data_source.dart';
 import 'package:oflix/models/movie_model.dart';
 
@@ -20,6 +21,8 @@ class MovieService {
 
   // get movie by id
   Future<MovieModel> fetchMovieById(int id) async {
+    debugPrint('fetchMovieById');
+    debugPrint('id: $id');
     try {
       return await MoviesDataSource.fetchMovieById(id);
     } catch (e) {
