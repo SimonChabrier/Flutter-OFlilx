@@ -63,4 +63,31 @@ class MoviesDataSource {
       throw Exception('Failed to load movie. Error: $e');
     }
   }
+
+  // récupérer les films similaire à un film
+  // https://api.themoviedb.org/3/movie/466420/similar?api_key=3d929913232e149adc38f3664c2e5eed
+
+  static Future<List<MovieModel>> fetchSimilarMovies(int id) async {
+    final String baseUrl =
+        'https://api.themoviedb.org/3/movie/$id/similar?api_key=${ApiConfig.apiKey}';
+    try {
+      final response = await http.get(Uri.parse(baseUrl));
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        //debugPrint('data: $data');
+        final List<dynamic> results = data['results'];
+        debugPrint('results: $results');
+        final similarMovies =
+            results.map((json) => MovieModel.fromJson(json)).toList();
+        // On retourne la liste movies
+        return similarMovies;
+      } else {
+        throw Exception(
+            'Failed to load movies. Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to load movies. Error: $e');
+    }
+  }
 }

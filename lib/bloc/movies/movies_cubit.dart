@@ -24,7 +24,7 @@ class MoviesCubit extends Cubit<MoviesState> {
       final List<MovieModel> movies = await MovieService(
         MoviesDataSource(),
       ).fetchMovies();
-      emit(MoviesStateSuccess(movies));
+      emit(MoviesStateSuccess(movies[0], movies));
     } catch (error) {
       emit(MoviesStateError(error.toString()));
     }
@@ -39,7 +39,15 @@ class MoviesCubit extends Cubit<MoviesState> {
       final MovieModel movie = await MovieService(
         MoviesDataSource(),
       ).fetchMovieById(id);
+
       emit(MovieStateSuccess(movie));
+      // similar movies
+
+      final List<MovieModel> similarMovies = await MovieService(
+        MoviesDataSource(),
+      ).fetchSimilarMovies(id);
+
+      emit(MoviesStateSuccess(movie, similarMovies));
     } catch (error) {
       emit(MovieStateError(error.toString()));
     }

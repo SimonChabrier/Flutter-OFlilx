@@ -19,13 +19,14 @@ class MoviesStateError extends MoviesState {
 }
 
 class MoviesStateSuccess extends MoviesState {
+  final MovieModel movie;
   // on ajoute une liste de films pour stocker les films récupérés depuis le service
   // ils sont retournés par le cubit qui apelle le service
   final List<MovieModel> movies;
   // on ajoute un constructeur pour pouvoir passer la liste de films
   // c'est le cubut qui va emit cet état avec la liste de films
   // il es ensuite récupéré par le MoviesView qui va afficher les films
-  MoviesStateSuccess(this.movies);
+  MoviesStateSuccess(this.movie, this.movies);
 }
 
 // le cas où on veut afficher un film par son id

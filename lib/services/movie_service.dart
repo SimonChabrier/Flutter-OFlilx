@@ -29,4 +29,15 @@ class MovieService {
       return Future.error(e);
     }
   }
+
+  // get similar movies
+  Future<List<MovieModel>> fetchSimilarMovies(int id) async {
+    debugPrint('fetchSimilarMovies');
+    debugPrint('id: $id');
+    try {
+      return await MoviesDataSource.fetchSimilarMovies(id);
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
 }

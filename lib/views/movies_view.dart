@@ -34,7 +34,8 @@ class MoviesView extends StatelessWidget {
                     child: Text('Erreur ${state.error}'),
                   );
                 } else if (state is MoviesStateSuccess) {
-                  return MoviesList(movies: state.movies);
+                  return MoviesList(
+                      movie: state.movies[0], movies: state.movies);
                 } else {
                   return Container();
                 }

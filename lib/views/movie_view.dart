@@ -7,6 +7,9 @@ import 'package:oflix/widgets/top_app_bar.dart';
 import 'package:oflix/widgets/section_title.dart';
 import 'package:oflix/widgets/spinner.dart';
 
+import '../widgets/movie_cards.dart';
+import '../widgets/movies_list.dart';
+
 class MovieView extends StatelessWidget {
   const MovieView({Key? key, required this.title, required this.id})
       : super(key: key);
@@ -42,6 +45,9 @@ class MovieView extends StatelessWidget {
                 } else if (state is MovieStateSuccess) {
                   debugPrint('MovieStateSuccess');
                   return MovieDetail(movie: state.movie);
+                } else if (state is MoviesStateSuccess) {
+                  debugPrint('MoviesStateSuccess');
+                  return MoviesList(movie: state.movie, movies: state.movies);
                 } else {
                   debugPrint('Container');
                   return Container();
