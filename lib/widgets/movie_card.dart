@@ -14,7 +14,6 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final moviesCubit = context.read<MoviesCubit>();
     return SizedBox(
       width: 300,
       child: Column(
